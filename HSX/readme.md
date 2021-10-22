@@ -42,9 +42,56 @@ RGB 立方体上任意一点与中轴构成的三角面上的所有颜色的色�
 
 ### 相互转换公式
 
-待补充
+转换公式如下:
+
+- RGB to HSV, RGB 和 HSV 取值范围都在[0, 1]
+
+$$
+C_{max} = max(R, G, B) \\
+C_{min} = min(R, G, B) \\
+\Delta = C_{max} - C_{min}\\
+
+H = \begin{cases} 
+0, & \Delta = 0  \\
+\\
+\frac{G-B}{\Delta}+0, & C_{max} = R \\
+\\
+\frac{B-R}{\Delta}+2, & C_{max} = G \\
+\\
+\frac{R-G}{\Delta}+4, & C_{max} = B \\
+\end{cases} \\
+H = \frac{H}{6} \\
+H = 1 + H, if H < 0 \\
+\\
+S = \begin{cases} 
+0, & C_{max} = 0 \\
+\frac{\Delta}{C_{max}}, & C_{max} \ne 0
+\end{cases} \\
+\\
+V = C_{max}
+$$
+
+- HSV to RGB, RGB 和 HSV 取值范围都在[0, 1]
+
+$$
+H = H * 6 \\
+I = floor(H), F = H - I \\
+M = V * (1 - S), N = V * (1 - S * F), K = V * (1 - S * (1 - F)) \\
+if I = 0, (R, G, B) = (V, K, M) \\
+if I = 1, (R, G, B) = (N, V, M) \\
+if I = 2, (R, G, B) = (M, V, K) \\
+if I = 3, (R, G, B) = (M, N, V) \\
+if I = 4, (R, G, B) = (K, M, V) \\
+if I = 5, (R, G, B) = (V, M, N) \\
+$$
 
 ## 主要应用
 
 图像处理, 如图像增强等, 基于此, 很多图像编辑工具都使用了这个颜色空间.
+
+
+
+## 参考
+
+1. http://tinf2.vub.ac.be/~dvermeir/manuals/gimp/Grokking-the-GIMP-v1.0/node49.html
 
